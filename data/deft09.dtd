@@ -1,0 +1,49 @@
+<!ELEMENT corpus (description, doc+) >
+
+<!ELEMENT description (titre, diffusion?, presentation?, traitements?)? >
+
+<!ELEMENT titre (#PCDATA) >
+
+<!ELEMENT diffusion (contact, cadre, disponibilite) >
+
+<!ELEMENT cadre (#PCDATA) >
+
+<!ELEMENT contact (#PCDATA) >
+
+<!ELEMENT disponibilite (#PCDATA) >
+<!ATTLIST disponibilite region CDATA #IMPLIED >
+<!ATTLIST disponibilite statuts CDATA #IMPLIED >
+
+<!ELEMENT presentation (source, segmentation?, encodage?, langue?) >
+<!ELEMENT source (#PCDATA) >
+<!ELEMENT segmentation (#PCDATA) >
+<!ELEMENT encodage (#PCDATA) >
+<!ELEMENT langue (#PCDATA) >
+<!ATTLIST langue iso639 CDATA #REQUIRED >
+
+<!ELEMENT traitements (responsable+) >
+
+<!ELEMENT responsable (#PCDATA) >
+
+<!ELEMENT doc (EVALUATION?, texte) >
+<!ATTLIST doc id NMTOKEN #REQUIRED >
+
+<!ELEMENT EVALUATION (EVAL_PARTI?, EVAL_PROPRIETE?) >
+
+<!ELEMENT EVAL_PARTI (PARTI+) >
+<!ATTLIST EVAL_PARTI nombre NMTOKEN #REQUIRED >
+
+<!ELEMENT PARTI EMPTY >
+<!ATTLIST PARTI valeur ( Verts-ALE | GUE-NGL | PSE | ELDR | PPE-DE ) #REQUIRED >
+<!ATTLIST PARTI confiance NMTOKEN #IMPLIED >
+
+<!ELEMENT EVAL_PROPRIETE (PROPRIETE+) >
+<!ATTLIST EVAL_PROPRIETE nombre NMTOKEN #REQUIRED >
+
+<!ELEMENT PROPRIETE EMPTY >
+<!ATTLIST PROPRIETE valeur ( OBJECTIF | SUBJECTIF ) #REQUIRED >
+<!ATTLIST PROPRIETE confiance NMTOKEN #IMPLIED >
+
+<!ELEMENT texte (p+) >
+<!ELEMENT p (#PCDATA|anonyme)* >
+<!ELEMENT anonyme EMPTY >
