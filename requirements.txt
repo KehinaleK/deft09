@@ -5,3 +5,5 @@ matplotlib
 scikit-learn
 lightgbm
 lxml
+spacy
+nltk
