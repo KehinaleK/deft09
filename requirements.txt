@@ -1,3 +1,4 @@
+prettytable
 beautifulsoup4
 pandas
 numpy
