@@ -4,4 +4,4 @@ numpy
 matplotlib
 scikit-learn
 lightgbm
-
+lxml
