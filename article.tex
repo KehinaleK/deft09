@@ -1,0 +1,131 @@
+% This must be in the first 5 lines to tell arXiv to use pdfLaTeX, which is strongly recommended.
+\pdfoutput=1
+% In particular, the hyperref package requires pdfLaTeX in order to break URLs across lines.
+
+\documentclass[11pt]{article}
+
+% Change "review" to "final" to generate the final (sometimes called camera-ready) version.
+\usepackage{acl}
+
+% Standard package includes
+\usepackage{times}
+\usepackage{latexsym}
+
+% For proper rendering and hyphenation of words containing Latin characters (including in bib files)
+\usepackage[T1]{fontenc}
+
+% This assumes your files are encoded as UTF8
+\usepackage[utf8]{inputenc}
+
+\usepackage{amsmath}
+
+% This is not strictly necessary, and may be commented out,
+% but it will improve the layout of the manuscript,
+% and will typically save some space.
+\usepackage{microtype}
+
+% This is also not strictly necessary, and may be commented out.
+% However, it will improve the aesthetics of text in
+% the typewriter font.
+\usepackage{inconsolata}
+
+%Including images in your LaTeX document requires adding
+%additional package(s)
+\usepackage{graphicx}
+
+\title{Etude du meilleur classifieur pour le DEFT de 2009}
+
+\author{
+  \text{MANSERI Kéhina\textsuperscript{(1)(2)}}
+  \text{SIRVEN-VIENOT Alix\textsuperscript{(1)(2)}}
+  \text{VAN-DEN-ZANDE Débora\textsuperscript{(1)(3)}}
+\\
+\\
+  \textsuperscript{(1)}Université Paris Nanterre
+  \textsuperscript{(2)}Parcours Recherche et Développement
+  \textsuperscript{(3)}Parcours Pro
+\\
+\\
+    \small {
+    manserikehina@gmail.com, alix.vienot@gmail.com, vdzdebora@gmail.com
+    }
+\\
+}
+
+\begin{document}
+\maketitle
+\begin{abstract}
+Coucou bouh abstract ! On va expliquer pleins de trucs mais pour l'instant on sait pas ce qu'on fait donc no lol.
+
+Si on veut citer le texte on peut faire comme ça \cite{forest2009variation} et je trouve ça très stylé.
+
+\end{abstract}
+
+\section{Introduction}
+On va faire des citations en bas de page comme ça\footnote{\url{http://acl-org.github.io/ACLPUB/formatting.html}} youpi !
+
+Dans cet article, nous présentons nos résultats pour la recherche 
+
+\section{Engines}
+
+\section{Preamble}
+
+\section{Document Body}
+
+\subsection{Tables and figures}
+
+\begin{table}
+  \centering
+  \begin{tabular}{lc}
+    \hline
+    \textbf{Nom} & \textbf{Taille de zeub} \\
+    \hline
+    Iris& -5 cm         \\
+    Loic& 3 cm          \\
+    Théo& 15 cm         \\
+    Débora& 42 cm         \\\hline
+  \end{tabular}
+  
+  \caption{La taille de zeub aux personnes associées.}
+  \label{tab:accents}
+\end{table}
+
+As much as possible, fonts in figures should conform
+to the document fonts. See Figure~\ref{fig:experiments} for an example of a figure and its caption.
+
+\begin{figure}[t]
+  \includegraphics[width=\columnwidth]{example-image-golden}
+  \caption{imge zeubi}
+  \label{fig:experiments}
+\end{figure}
+
+\begin{figure*}[t]
+  \includegraphics[width=0.48\linewidth]{example-image-a} \hfill
+  \includegraphics[width=0.48\linewidth]{example-image-b}
+  \caption {A minimal working example to demonstrate how to place
+    two images side-by-side.}
+\end{figure*}
+
+\subsection{Hyperlinks}
+
+
+\subsection{Citations}
+
+
+\subsection{References}
+
+\subsection{Appendices}
+
+Use \verb|\appendix| before any appendix section to switch the section numbering over to letters. See Appendix~\ref{sec:appendix} for an example.
+
+\section{Références}
+\bibliography{custom}
+\cite{forest2009variation}
+
+\appendix
+
+\section{Exemple d'annexe}
+Dans l'annexe on peut mettre pleins de choses, ça compte pas dans le nombre de pages.
+
+
+\end{document}
