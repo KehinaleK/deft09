@@ -42,7 +42,24 @@
 %additional package(s)
 \usepackage{graphicx}
 
-\title{Défi DEFT 2009 : Classifier automatiquement les groupes politiques}
+% pour mettre une en-tête et des pieds de pages
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+% Réinitialise les en-têtes et pieds de page
+\fancyhf{} 
+% En-tête au centre [C] mais sinon [L][R] pour gauche droite
+\fancyhead[L]{\textit{DEFT’09 « DÉfi Fouille de Textes », Paris, 6 janvier 2025}}
+
+% Enlever la barre horizontale
+\renewcommand{\headrulewidth}{0pt} 
+
+% pour la pagination automatique
+\fancyfoot[R]{\thepage}
+% pour forcer la pagination sur la première page
+\thispagestyle{fancy}
+
+\title{DEFT'09 : classifier automatiquement les groupes politiques}
 
 \author{
   \text{MANSERI Kéhina\textsuperscript{(1)(2)}}
@@ -63,6 +80,7 @@
 
 \begin{document}
 \maketitle
+
 \begin{abstract}
 La classification des interventions parlementaires en fonction de leur parti politique représente une tâche clé dans la fouille de textes. Dans le cadre du défi DEFT 2009, nous avons analysé un corpus multilingue comprenant des interventions en français, anglais et italien. Ce corpus présente des défis liés au déséquilibre des classes et à la diversité des thématiques. Pour relever ce défi, nous avons testé plusieurs algorithmes de classification. 
 
@@ -194,6 +212,7 @@ Pour le upsampling, on augmente les données minoritaires au même nombre d'éch
 \section{Évaluation des modèles}
 
 \subsection{Métriques d'évaluation}
+(J'ai  juste mis au hasard pour avoir le template du tableau !!!)
 \begin{table}[ht]
     \centering
     \begin{tabular}{lccc}
