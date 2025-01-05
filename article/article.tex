@@ -66,10 +66,8 @@
 \begin{abstract}
 La classification des interventions parlementaires en fonction de leur parti politique représente une tâche clé dans la fouille de textes. Dans le cadre du défi DEFT 2009, nous avons analysé un corpus multilingue comprenant des interventions en français, anglais et italien. Ce corpus présente des défis liés au déséquilibre des classes et à la diversité des thématiques. Pour relever ce défi, nous avons testé plusieurs algorithmes de classification. 
 
-EN ANGLAIS AUSSI !!
+EN ANGLAIS AUSSI ???
 
-
-Si on veut citer le texte on peut faire comme ça \cite{forest2009variation} et je trouve ça très stylé.
 
 \end{abstract}
 
@@ -96,27 +94,30 @@ En effet, retirer tous les doublons de l'ensemble de train nous donnerait un spl
 Après avoir enlevé les doublons, nous avons obtenu un split de 53,40\% pour le train et 46,60\% pour le test. Pour avoir une distribution exacte de 60/40, nous avons retiré certains textes de l'ensemble de test.
 
 \subsection{Distribution des classes}
-\begin{table}[H]
-    \centering
-    \begin{tabular}{|l|c|c|c|}
-        \hline
-        \textbf{Classe}   & \textbf{Train} & \textbf{Test} & \textbf{Pourcentage} \\ \hline
-        \textbf{PSE}      & 3650           & 2489          & 40.54\%              \\ \hline
-        \textbf{ELDR}     & 1351           & 908           & 40.19\%              \\ \hline
-        \textbf{Verts-ALE}& 1609           & 1072          & 39.99\%              \\ \hline
-        \textbf{PPE-DE}   & 4635           & 3047          & 39.66\%              \\ \hline
-        \textbf{GUE-NGL}  & 1823           & 1196          & 39.62\%              \\ \hline
+Voici à quoi ressemblent nos classes une fois la suppression des données et l'égalisation du split (cf. Tableau~\ref{tab:pourcentage_test}).
+
+\begin{table}[ht]
+\centering
+    \begin{tabular}{lccc}
+        \toprule
+        \textbf{Classe}   & \textbf{Train} & \textbf{Test} & \textbf{Pourcentage} \\ \midrule
+        \textbf{PSE}      & 3650           & 2489          & 40.54\% \\    
+        \textbf{ELDR}     & 1351           & 908           & 40.19\% \\          
+        \textbf{Verts-ALE}& 1609           & 1072          & 39.99\% \\          
+        \textbf{PPE-DE}   & 4635           & 3047          & 39.66\% \\          
+        \textbf{GUE-NGL}  & 1823           & 1196          & 39.62\%  \\ \bottomrule            
     \end{tabular}
     \caption{Distribution des pourcentages entre Train et Test.}
-    \label{tab:pourcentage_test}
+    \label{tab:pourcentage_test} % Tableau~\ref{tab:pourcentage_test}
 \end{table}
 
 \textbf{Résumé des totaux} \\
 Total Train : \> 13068 \\
 Total Test  : \> 8712 \\
 Pourcentage Global Test : \> 40.00\%
+\\
 
-Nous pouvons maintenant observer la distribution des classes dans les différents splits sur la Figure~\ref{fig:graph_avant}.
+À première vue, les classes semblent déséquilibrées. Afin de mieux visualiser cette disparité, nous avons réalisé un graphique. La distribution des classes dans les différents splits est présentée sur la Figure~\ref{fig:graph_avant}.
 
 \begin{figure}[H]
   \includegraphics[width=\columnwidth]{latex/graphique_avant.png}
@@ -134,10 +135,17 @@ Nous pouvons maintenant observer la distribution des classes dans les différent
 
 
 \section{Pré-traitement des données}
-
 \subsection{Normalisation des données}
+Pour préparer nos textes à la classification, nous avons appliqué plusieurs étapes de normalisation. Les ponctuations et les \textit{stopwords} ont été supprimés pour réduire le bruit dans les données. Tous les textes ont été convertis en minuscules pour uniformiser leur format. Enfin, une lemmatisation a été effectuée pour ramener les mots à leur forme canonique, optimisant ainsi la qualité et la cohérence des données textuelles.
 
 \subsection{Vectorisation des données}
+Dans l'article présent sur le site \cite{forest2009variation}, on voit que les paramètres de la vectorisation jouent un rôle assez important dans les performances d'une modèle.
+
+En nous basant sur cet article et sur le TP1, nous allons tester le TFIDF Vectorizer avec différents hyperparamètres sur trois classifieurs différents afin de voir si nous obtenons des résultats significativement mieux. Les classifieurs utilisés seront : KNN (car utilisé dans l'article) SVC Lineaire (modèle linéaire) Complement NB (modèle probabilistique)
+
+Si pour tous ces algorithmes, une vectorisation donne de meilleurs résultats, alors nous utiliserons cette dernières pour le reste de nos tests.
+
+Au vu de nos résultats, on peut admettre que c'est un tfidf avec une max df de 0.9, des max\_features de 15 000 et un ngram range de (1, 2) qui donne les meilleurs résultats. Nous utiliserons ainsi cette combinaison d'hyperparamètres et donc cette vectorisation pour nos essais suivants.
 
 \section{Comparaison des modèles}
 Nous avons décidé de tester plusieurs modèles qui ont des types de classifications différentes (cf. Tableau~\ref{tab:classifieurs_types}).
@@ -164,11 +172,9 @@ Nous avons décidé de tester plusieurs modèles qui ont des types de classifica
 \end{table}
 
 \subsection{Choix des algorithmes}
-Pour notre étude, nous avons choisi de tester un large éventail de modèles, incluant des approches linéaires, probabilistes, non-linéaires et des ensembles. Bien que nous savions qu'il était possible de concentrer nos efforts sur un seul type d'algorithme, nous avons profité du temps disponible pour explorer différents classifieurs. Cette approche nous permet non seulement de comparer les performances des algorithmes, mais aussi de valider notre hypothèse concernant l'impact des déséquilibres de classes dans nos données.
+Dans cette étude, nous avons essayé plusieurs modèles, incluant des approches linéaires, probabilistes, non-linéaires et d'ensemble, dans le but de comparer leurs performances et d'analyser l'impact du déséquilibre des classes. Les modèles linéaires, généralement moins efficaces dans ce contexte, ont été comparés à des modèles probabilistes (MultinomialNB, ComplementNB) et d'ensemble (Random Forest, LGBMClassifier), connus pour leur aptitude à mieux gérer les données déséquilibrées.
 
-Nos données étant extrêmement déséquilibrées, nous anticipons que les modèles linéaires auront des performances limitées, car ils sont souvent moins adaptés à ce type de scénario. En revanche, les modèles probabilistes, tels que MultinomialNB et ComplementNB, sont particulièrement bien adaptés aux jeux de données déséquilibrés grâce à leur capacité à estimer directement des probabilités de classes.
-
-Cette exploration nous permettra de retenir les trois meilleurs algorithmes à l'issue de nos tests. Ces résultats serviront également à justifier nos choix méthodologiques et à appuyer notre intuition selon laquelle les modèles probabilistes et les modèles utilisant des techniques d'ensemble (comme Random Forest ou LGBMClassifier) seront mieux adaptés aux particularités de nos données. En procédant ainsi, nous avons cherché à maximiser la robustesse de notre analyse tout en assurant une base solide pour nos conclusions.
+À l'issue de nos tests, nous avons retenu les trois meilleurs algorithmes, [ALGOS]
 
 \subsection{Organisation de la comparaison}
 
