@@ -72,11 +72,58 @@ Dans cet article, nous présentons nos résultats pour la recherche
 
 \section{Présentation des données}
 
+Notre objectif est d'entraîner un modèle qui détermine automatiquement le parti politique d’appartenance de chaque intervenant dans le corpus parlementaire. 
+
+Notre corpus est multilingue, c'est-à-dire qu'il contient plusieurs ensembles dans des langues différentes telles que le français, l'anglais et l'italien. C'est donc un corpus parallèle et comparable auquel nous avons affaire. 
+
+\subsection{Extraction des données}
+Nous avons extrait les données sur le site du DEFT\footnote{\textit{https://deft.lisn.upsaclay.fr/}} en format xml et nous les avons parsé avec BeautifulSoup. 
+
+En comparant la longueur de la liste de labels et les id des échantillons de test, nous avons pu remarquer que deux interventions ne disposaient pas de label.
+
+Ces deux échantillons ne sont ensuite pas stockés dans la dataframe utilisée pour le reste du TP.
+
+
+
+\subsection{Suppression des doublons}
+Après concertation avec les autres étudiants, nous avons été informées qu'il y avait des doublons entre les ensembles de train et de test.
+
+Nous avons trouvé au total 7 813 textes en communs entre les données d'entraînement et de test. Nous voulions donc retirer ces doublons des deux ensembles tout en essayant de respecter le répartition du corpus qui est de base de 60\% des échantillons pour le train et 40\% pour le test. 
+
+En effet, retirer tous les doublons de l'ensemble de train nous donnerait un split bien trop proche.
+
+Après avoir enlevé les doublons, nous avons obtenu un split de 53,40\% pour le train et 46,60\% pour le test. Pour avoir une distribution exacte de 60/40, nous avons retiré certains textes de l'ensemble de test.
+
+\subsection{Distribution des classes}
+\begin{table}[ht]
+    \centering
+    \begin{tabular}{|l|c|c|c|}
+        \hline
+        \textbf{Classe}   & \textbf{Train} & \textbf{Test} & \textbf{Pourcentage} \\ \hline
+        \textbf{PSE}      & 3650           & 2489          & 40.54\%              \\ \hline
+        \textbf{ELDR}     & 1351           & 908           & 40.19\%              \\ \hline
+        \textbf{Verts-ALE}& 1609           & 1072          & 39.99\%              \\ \hline
+        \textbf{PPE-DE}   & 4635           & 3047          & 39.66\%              \\ \hline
+        \textbf{GUE-NGL}  & 1823           & 1196          & 39.62\%              \\ \hline
+    \end{tabular}
+    \caption{Distribution des pourcentages entre Train et Test.}
+    \label{tab:pourcentage_test}
+\end{table}
+
+\textbf{Résumé des totaux} \\
+Total Train : \> 13068 \\
+Total Test  : \> 8712 \\
+Pourcentage Global Test : \> 40.00\%
+
+Nous pouvons maintenant observer la distribution des classes dans les différents splits sur la Figure~\ref{fig:graph_avant}.
+
 \begin{figure}[h]
   \includegraphics[width=\columnwidth]{latex/graphique_avant.png}
   \caption{Répartition des classes \textbf{avant} nettoyage et rééquilibrage du split}
   \label{fig:graph_avant} % pareil pour citer Figure~\ref{fig:graph_avant}
 \end{figure}
+
+
 
 \begin{figure}[h]
   \includegraphics[width=\columnwidth]{latex/graphique_apres.png}
@@ -84,12 +131,6 @@ Dans cet article, nous présentons nos résultats pour la recherche
   \label{fig:graph_apres} % Figure~\ref{fig:graph_apres}
 \end{figure}
 
-\subsection{Extraction des données}
-
-\subsection{Suppression des doublons}
-
-\subsection{Distribution des classes}
-Voir les Figures~\ref{fig:graph_avant} et~\ref{fig:graph_apres} pour une comparaison.
 
 \section{Pré-traitement des données}
 
