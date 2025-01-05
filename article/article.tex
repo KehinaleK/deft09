@@ -1,6 +1,10 @@
 % This must be in the first 5 lines to tell arXiv to use pdfLaTeX, which is strongly recommended.
 \pdfoutput=1
 % In particular, the hyperref package requires pdfLaTeX in order to break URLs across lines.
+\pdfminorversion=7
+\pdfobjcompresslevel=3
+\pdfcompresslevel=9
+
 
 \documentclass[11pt]{article}
 
@@ -62,70 +66,96 @@ Si on veut citer le texte on peut faire comme ça \cite{forest2009variation} et 
 \end{abstract}
 
 \section{Introduction}
-On va faire des citations en bas de page comme ça\footnote{\url{http://acl-org.github.io/ACLPUB/formatting.html}} youpi !
+Vous pouvez retrouver notre travail sur notre GitHub\footnote{\url{https://github.com/KehinaleK/deft09/tree/main}} pour accéder à l'entièreté de notre code.
 
 Dans cet article, nous présentons nos résultats pour la recherche 
 
-\section{Engines}
+\section{Présentation des données}
 
-\section{Preamble}
-
-\section{Document Body}
-
-\subsection{Tables and figures}
-
-\begin{table}
-  \centering
-  \begin{tabular}{lc}
-    \hline
-    \textbf{Nom} & \textbf{Taille de zeub} \\
-    \hline
-    Iris& -5 cm         \\
-    Loic& 3 cm          \\
-    Théo& 15 cm         \\
-    Débora& 42 cm         \\\hline
-  \end{tabular}
-  
-  \caption{La taille de zeub aux personnes associées.}
-  \label{tab:accents}
-\end{table}
-
-As much as possible, fonts in figures should conform
-to the document fonts. See Figure~\ref{fig:experiments} for an example of a figure and its caption.
-
-\begin{figure}[t]
-  \includegraphics[width=\columnwidth]{example-image-golden}
-  \caption{imge zeubi}
-  \label{fig:experiments}
+\begin{figure}[h]
+  \includegraphics[width=\columnwidth]{latex/graphique_avant.png}
+  \caption{Répartition des classes \textbf{avant} nettoyage et rééquilibrage du split}
+  \label{fig:graph_avant} % pareil pour citer Figure~\ref{fig:graph_avant}
 \end{figure}
 
-\begin{figure*}[t]
-  \includegraphics[width=0.48\linewidth]{example-image-a} \hfill
-  \includegraphics[width=0.48\linewidth]{example-image-b}
-  \caption {A minimal working example to demonstrate how to place
-    two images side-by-side.}
-\end{figure*}
+\begin{figure}[h]
+  \includegraphics[width=\columnwidth]{latex/graphique_apres.png}
+  \caption{Répartition des classes \textbf{après} nettoyage et rééquilibrage du split}
+  \label{fig:graph_apres} % Figure~\ref{fig:graph_apres}
+\end{figure}
 
-\subsection{Hyperlinks}
+\subsection{Extraction des données}
+
+\subsection{Suppression des doublons}
+
+\subsection{Distribution des classes}
+Voir les Figures~\ref{fig:graph_avant} et~\ref{fig:graph_apres} pour une comparaison.
+
+\section{Pré-traitement des données}
+
+\subsection{Normalisation des données}
+
+\subsection{Vectorisation des données}
+
+\section{Comparaison des modèles}
+Nous avons décidé de tester plusieurs modèles qui ont des types de classifications différentes (cf. Tableau~\ref{tab:classifieurs_types}).
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|l|l|}
+        \hline
+        \textbf{Nom du Classifieur}        & \textbf{Type} \\ \hline
+        LinearSVC                         & Linéaire      \\ \hline
+        RandomForestClassifier            & Ensemble      \\ \hline
+        KNeighborsClassifier              & Non-linéaire  \\ \hline
+        PassiveAggressiveClassifier       & Linéaire      \\ \hline
+        MultinomialNB                     & Probabiliste  \\ \hline
+        ComplementNB                      & Probabiliste  \\ \hline
+        SVC                               & Non-linéaire  \\ \hline
+        RidgeClassifier                   & Linéaire      \\ \hline
+        LGBMClassifier                    & Ensemble      \\ \hline
+        LogisticRegression                & Linéaire      \\ \hline
+        SGDClassifier                     & Linéaire      \\ \hline
+    \end{tabular}
+    \caption{Liste des classifieurs et leur type.}
+    \label{tab:classifieurs_types} % ça c'est pour le citer après ! Tableau~\ref{tab:classifieurs_types}
+\end{table}
+
+\subsection{Choix des algorithmes}
+Pour notre étude, nous avons choisi de tester un large éventail de modèles, incluant des approches linéaires, probabilistes, non-linéaires et des ensembles. Bien que nous savions qu'il était possible de concentrer nos efforts sur un seul type d'algorithme, nous avons profité du temps disponible pour explorer différents classifieurs. Cette approche nous permet non seulement de comparer les performances des algorithmes, mais aussi de valider notre hypothèse concernant l'impact des déséquilibres de classes dans nos données.
+
+Nos données étant extrêmement déséquilibrées, nous anticipons que les modèles linéaires auront des performances limitées, car ils sont souvent moins adaptés à ce type de scénario. En revanche, les modèles probabilistes, tels que MultinomialNB et ComplementNB, sont particulièrement bien adaptés aux jeux de données déséquilibrés grâce à leur capacité à estimer directement des probabilités de classes.
+
+Cette exploration nous permettra de retenir les trois meilleurs algorithmes à l'issue de nos tests. Ces résultats serviront également à justifier nos choix méthodologiques et à appuyer notre intuition selon laquelle les modèles probabilistes et les modèles utilisant des techniques d'ensemble (comme Random Forest ou LGBMClassifier) seront mieux adaptés aux particularités de nos données. En procédant ainsi, nous avons cherché à maximiser la robustesse de notre analyse tout en assurant une base solide pour nos conclusions.
+
+\subsection{Organisation de la comparaison}
+
+\section{Stratégies d'amélioriation}
 
 
-\subsection{Citations}
+\section{Évaluation des modèles}
+
+\subsection{Métriques d'évaluation}
+\begin{table}[ht]
+    \centering
+    \begin{tabular}{|l|c|c|c|}
+        \hline
+        \textbf{Algorithme} & \textbf{Précision} & \textbf{Rappel} & \textbf{F1-score} \\ \hline
+        Logistic Regression & 0.85               & 0.82            & 0.83              \\ \hline
+        Random Forest       & 0.88               & 0.85            & 0.86              \\ \hline
+        SVM                 & 0.87               & 0.84            & 0.85              \\ \hline
+    \end{tabular}
+    \caption{Résultats des algorithmes sur les métriques de classification.}
+    \label{tab:resultats_algo}
+\end{table}
+
+\subsection{Analyse des résultats}
 
 
-\subsection{References}
+\section{Conclusion}
 
-\subsection{Appendices}
 
-Use \verb|\appendix| before any appendix section to switch the section numbering over to letters. See Appendix~\ref{sec:appendix} for an example.
-
-\section{Références}
 \bibliography{custom}
 \cite{forest2009variation}
-
-\appendix
-
-\section{Exemple d'annexe}
-Dans l'annexe on peut mettre pleins de choses, ça compte pas dans le nombre de pages.
-
 
 \end{document}
