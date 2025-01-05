@@ -1,3 +1,2 @@
 .gitattributes
-article/graphique_avant.png
-article/graphique_apres.png
+article/*.png
