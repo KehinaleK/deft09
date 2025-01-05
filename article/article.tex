@@ -11,6 +11,11 @@
 % Change "review" to "final" to generate the final (sometimes called camera-ready) version.
 \usepackage{acl}
 
+% pour gérer les figures et tableaux avec H
+\usepackage{float}
+% tableaux plus propres
+\usepackage{booktabs}
+
 % Standard package includes
 \usepackage{times}
 \usepackage{latexsym}
@@ -37,7 +42,7 @@
 %additional package(s)
 \usepackage{graphicx}
 
-\title{Etude du meilleur classifieur pour le DEFT de 2009}
+\title{Défi DEFT 2009 : Classifier automatiquement les groupes politiques}
 
 \author{
   \text{MANSERI Kéhina\textsuperscript{(1)(2)}}
@@ -59,30 +64,26 @@
 \begin{document}
 \maketitle
 \begin{abstract}
-Coucou bouh abstract ! On va expliquer pleins de trucs mais pour l'instant on sait pas ce qu'on fait donc no lol.
+La classification des interventions parlementaires en fonction de leur parti politique représente une tâche clé dans la fouille de textes. Dans le cadre du défi DEFT 2009, nous avons analysé un corpus multilingue comprenant des interventions en français, anglais et italien. Ce corpus présente des défis liés au déséquilibre des classes et à la diversité des thématiques. Pour relever ce défi, nous avons testé plusieurs algorithmes de classification. 
+
+EN ANGLAIS AUSSI !!
+
 
 Si on veut citer le texte on peut faire comme ça \cite{forest2009variation} et je trouve ça très stylé.
 
 \end{abstract}
 
 \section{Introduction}
+Notre objectif est d'entraîner un modèle qui détermine automatiquement le parti politique d’appartenance de chaque intervenant dans le corpus parlementaire. 
 Vous pouvez retrouver notre travail sur notre GitHub\footnote{\url{https://github.com/KehinaleK/deft09/tree/main}} pour accéder à l'entièreté de notre code.
 
-Dans cet article, nous présentons nos résultats pour la recherche 
-
 \section{Présentation des données}
-
-Notre objectif est d'entraîner un modèle qui détermine automatiquement le parti politique d’appartenance de chaque intervenant dans le corpus parlementaire. 
-
 Notre corpus est multilingue, c'est-à-dire qu'il contient plusieurs ensembles dans des langues différentes telles que le français, l'anglais et l'italien. C'est donc un corpus parallèle et comparable auquel nous avons affaire. 
 
 \subsection{Extraction des données}
-Nous avons extrait les données sur le site du DEFT\footnote{\textit{https://deft.lisn.upsaclay.fr/}} en format xml et nous les avons parsé avec BeautifulSoup. 
+Nous avons extrait les données sur le site du DEFT\footnote{\url{https://deft.lisn.upsaclay.fr/}} en format xml et nous les avons parsé avec BeautifulSoup. 
 
-En comparant la longueur de la liste de labels et les id des échantillons de test, nous avons pu remarquer que deux interventions ne disposaient pas de label.
-
-Ces deux échantillons ne sont ensuite pas stockés dans la dataframe utilisée pour le reste du TP.
-
+En comparant la longueur de la liste de labels et les ID des échantillons de test, nous avons pu remarquer que deux interventions ne disposaient pas de label. Nous avons donc décidé de simplement les ignorer.
 
 
 \subsection{Suppression des doublons}
@@ -95,7 +96,7 @@ En effet, retirer tous les doublons de l'ensemble de train nous donnerait un spl
 Après avoir enlevé les doublons, nous avons obtenu un split de 53,40\% pour le train et 46,60\% pour le test. Pour avoir une distribution exacte de 60/40, nous avons retiré certains textes de l'ensemble de test.
 
 \subsection{Distribution des classes}
-\begin{table}[ht]
+\begin{table}[H]
     \centering
     \begin{tabular}{|l|c|c|c|}
         \hline
@@ -117,7 +118,7 @@ Pourcentage Global Test : \> 40.00\%
 
 Nous pouvons maintenant observer la distribution des classes dans les différents splits sur la Figure~\ref{fig:graph_avant}.
 
-\begin{figure}[h]
+\begin{figure}[H]
   \includegraphics[width=\columnwidth]{latex/graphique_avant.png}
   \caption{Répartition des classes \textbf{avant} nettoyage et rééquilibrage du split}
   \label{fig:graph_avant} % pareil pour citer Figure~\ref{fig:graph_avant}
@@ -125,7 +126,7 @@ Nous pouvons maintenant observer la distribution des classes dans les différent
 
 
 
-\begin{figure}[h]
+\begin{figure}[H]
   \includegraphics[width=\columnwidth]{latex/graphique_apres.png}
   \caption{Répartition des classes \textbf{après} nettoyage et rééquilibrage du split}
   \label{fig:graph_apres} % Figure~\ref{fig:graph_apres}
@@ -172,19 +173,29 @@ Cette exploration nous permettra de retenir les trois meilleurs algorithmes à l
 \subsection{Organisation de la comparaison}
 
 \section{Stratégies d'amélioriation}
+Pour améliorer nos résultats, on pourrait essayer de faire un downsampling ou un upsampling, c'est-à-dire d'augmenter ou de diminuer le nombre d'échantillons dans nos données. Avoir des données équilibrées est une chose importante dans le machine learning car sinon les algorithmes priviligent les classes majoritaires et les résultats sont donc médiocres.
 
+Dans notre cas, comme on a pas énormément de données, le plus intéressant serait d'augmenter artificiellement nos données. Heuresement, sklearn propose de le faire assez facilement grâce au module resample.
+
+Pour le upsampling, on augmente les données minoritaires au même nombre d'échantillons que la classe qui en a le plus, et pour le downsampling, on fait la même chose mais avec la classe minimale. Les résultats sont disponibles sur la Figure~\ref{fig:equilibrage}.
+
+\begin{figure}[H]
+  \includegraphics[width=\columnwidth]{latex/equilibrage.png}
+  \caption{Répartition des classes \textbf{avant} nettoyage et rééquilibrage du split}
+  \label{fig:equilibrage} % pareil pour citer Figure~\ref{fig:equilibrage}
+\end{figure}
 
 \section{Évaluation des modèles}
 
 \subsection{Métriques d'évaluation}
 \begin{table}[ht]
     \centering
-    \begin{tabular}{|l|c|c|c|}
-        \hline
-        \textbf{Algorithme} & \textbf{Précision} & \textbf{Rappel} & \textbf{F1-score} \\ \hline
-        Logistic Regression & 0.85               & 0.82            & 0.83              \\ \hline
-        Random Forest       & 0.88               & 0.85            & 0.86              \\ \hline
-        SVM                 & 0.87               & 0.84            & 0.85              \\ \hline
+    \begin{tabular}{lccc}
+        \toprule
+        \textbf{Algorithme} & \textbf{Précision} & \textbf{Rappel} & \textbf{F1-score} \\ \midrule
+        Logistic Regression & 0.85               & 0.82            & 0.83              \\
+        Random Forest       & 0.88               & 0.85            & 0.86              \\
+        SVM                 & 0.87               & 0.84            & 0.85              \\ \bottomrule
     \end{tabular}
     \caption{Résultats des algorithmes sur les métriques de classification.}
     \label{tab:resultats_algo}
