@@ -161,7 +161,7 @@ Nous avons appliqué plusieurs étapes de normalisation aux données : la ponctu
 \subsection{Vectorisation des données}
 Les essais menés par les participants précédents à la tâche 3 montrent que les hyperparamètres utilisés lors de la vectorisation des données jouent un rôle dans l'amélioration des résultats.
 
-En se basant sur ces essais et les conclusions présentées dans le TP1\cite{TP1}, 8 vectorisations TfIdf ont été appliquées sur nos données avec des valeurs d'hyperparamètres différentes. La taille du vocabulaire retenu, la taille des ngrammes analysés, et le seuil accepté du nombre de documents. 
+En se basant sur ces essais et les conclusions présentées dans le TP1\cite{TP1}, 11 vectorisations TfIdf ont été appliquées sur nos données avec des valeurs d'hyperparamètres différentes. La taille du vocabulaire retenu, la taille des ngrammes analysés, et le seuil accepté du nombre de documents. 
 
 Nous avons ensuite procédé à des essais sur trois classifieurs basés sur des concepts différents et avec leurs hyperparamètres par défaut : KNN (car utilisé dans l'article) SVC Lineaire (modèle linéaire) et Complement NB (modèle probabilistique).
 
@@ -269,15 +269,15 @@ Elle permet notamment de juger un modèle sur sa capacité à classifier les éc
 \label{tab:pourcentage_test}
 \end{table}
 
-En se basant donc sur les valeurs de macro f-mesure, les modèles les plus performants sont : \textbf{Passive Aggressive Classifier} (avec valeur de paramètre de régularisation de 0.5 et la fonction de perte squared hinge), le \textbf{LinearSVC} (avec une formulation duale) et le \textbf{SGDClassifier} (avec ses hyperparamètres par défaut).
+En se basant donc sur les valeurs de macro f-mesure, les modèles les plus performants sont: \textbf{Passive Aggressive Classifier} (avec valeur de paramètre de régularisation de 0.5 et la fonction de perte squared hinge), le \textbf{LinearSVC} (avec une formulation duale) et le \textbf{SGDClassifier} (avec ses hyperparamètres par défaut).
 
 Le PassiveAggressiveClassifier reste en réalité plus efficace que le LinearSVC et le SGDClassifier peu importe ses valeurs d'hyperparamètres mais nous avons ici décidé de présenter les trois meilleurs algorithmes. 
 
 Nous pouvons premièrement voir que les valeurs de macro f-mesure restent très proches dans les trois cas. Si le score d'accuracy du SGDC s'avère clairement moins bon que ceux des deux autres modèles, il reste très proche de sa propre macro f-mesure. Il semblerait donc ici que le SGDC permette d'obtenir des prédictions plus similaires entre chaque classe mais moins bonnes en moyenne pour chacune d'entre elles là ou le LinearSVC et le PassiveAggressiveClassifier prédisent mieux certaines classes mais bien moins d'autres.
 
-\subsection{Résultats pour le sur échantillonnage}
+\subsection{Résultats pour le sur-échantillonnage}
 
-Nous avons ensuite entraîné ces trois classifieurs sur les données obtenues après un sur-échantillonnage pour voir si des différences de scores pouvaient être observées.
+Nous avons ensuite entrainé ces trois classifieurs sur les données obtenues après un sur-échantillonnage pour voir si des différences de scores pouvaient être observées.
 
 \begin{table}[ht]
 \centering
@@ -291,14 +291,14 @@ Nous avons ensuite entraîné ces trois classifieurs sur les données obtenues a
         \bottomrule            
     \end{tabular}%
 }
-\caption{Meilleurs résultats obtenus après sur échantillonnage.}
+\caption{Meilleurs résultats obtenus après sur-échantillonnage.}
 \label{tab:pourcentage_test}
 \end{table}
 
 Les meilleurs résultats obtenus pour chaque classifieur l'ont été avec des combinaisons d'hyperparamètres similaires aux plus performantes sur les données initiales. Le PassiveAggressiveClassifier est notamment ici plus performant en utilisant un paramètre de régularisation plus élevé, signifiant donc moins de régularisation. Il semblerait donc qu'une régularisation moins élevée soit plus performante sur des données avec une distribution équilibrée. Les valeurs d'accuracy et de macro f-mesure sont également moins éloignées pour chaque classifieur, indiquant donc une performance de prédiction similaire entre chaque classe. Les améliorations obtenues ici demeurent cependant très faibles.
 
-\subsection{Résultats pour le sous échantillonnage}
-Nous avons ensuite entraîné ces trois classifieurs sur les données après avoir effectué une opération de sous échantillonnage. Nous voyons que les résulats restent moins bon qu'avec les données d'origine, montrant la nécéssité d'un corpus plus important. 
+\subsection{Résultats pour le sous-échantillonnage}
+Nous avons ensuite entraîné ces trois classifieurs sur les données après avoir effectué une opération de sous-échantillonnage. Nous voyons que les résultats restent moins bon qu'avec les données d'origine, montrant la nécéssité d'un corpus plus important. 
 
 \begin{table}[ht]
 \centering
@@ -313,7 +313,7 @@ Nous avons ensuite entraîné ces trois classifieurs sur les données après avo
         \bottomrule            
     \end{tabular}%
 }
-\caption{Meilleurs résultats obtenus après sous échantillonnage.}
+\caption{Meilleurs résultats obtenus après sous-échantillonnage.}
 
 \label{tab:pourcentage_test}
 \end{table}
@@ -321,19 +321,19 @@ Nous avons ensuite entraîné ces trois classifieurs sur les données après avo
 
 \subsection{Résultats pour le classifieur multilingue}
 
-La macro-avg la plus élevée obtenue sur un entraînement trilingue est de 0.17 avec le LinearSVC et ses hyperparamètres par défault. Nous avons ensuite appliqué le sur-échantillonnage à ce corpus trilingue pour espérer obtenir de meilleurs résultats mais le PassiveAggressiveClassifier obtenait comme meilleure valeur une macro-avg de 0.35. Un entraînement uniquement sur les langues latines, le français et l'italien, a donné des résultats quasi identiques.
+La macro f-mesure la plus élevée obtenue sur un entraînement trilingue est de 0.17 avec le LinearSVC et ses hyperparamètres par défaut. Nous avons ensuite appliqué le sur-échantillonnage à ce corpus trilingue pour espérer obtenir de meilleurs résultats mais le PassiveAggressiveClassifier obtenait comme meilleure valeur une macro f-mesure de 0.35. Un entraînement uniquement sur les langues latines, le français et l'italien, a donné des résultats quasi identiques.
 
 \subsection{Résultats pour une séparation au hasard}
 
-Enfin, nous avons essayé de récupérer les données d'origine (après supression des doublons) afin de créer une nouvelle séparation randomisée des ensembles d'entraînement de test.
-\textbf{La meilleure valeur de macro f-mesure obtenue est de 0.35 avec le PassivieAggressiveClassifier}, équivalente aux résulats observés après le sur-échantillonage. 
+Enfin, nous avons essayé de récupérer les données d'origine (après suppression des doublons) afin de créer une nouvelle séparation randomisée des ensembles d'entraînement de test.
+\textbf{La meilleure valeur de macro f-mesure obtenue est de 0.35 avec le PassiveAggressiveClassifier}, équivalente aux résultats observés après le sur-échantillonage. 
 
 \section{Conclusion}
 
-De ces expériences, nous pouvons conclure qu'une tâche aussi complexe que la reconnaissance de parti politique ne peut être résolue avec un corpus aussi maigre. Les résulats obtenus, si plus élevés que ceux du défi initial, restent très bas malgré un nombre conséquent de classifieurs et de vectorisations comparés.
+De ces expériences, nous pouvons conclure qu'une tâche aussi complexe que la reconnaissance de parti politique ne peut être résolue avec un corpus aussi maigre. Les résultats obtenus, si plus élevés que ceux du défi initial, restent très bas malgré un nombre conséquent de classifieurs et de vectorisations comparés.
 
 
-Nous avons pu montrer qu'en équilibrant les données, par exemple avec la technique du sur-échantillonage, nous arrivions à améliorer les performances de nos modèles. Nous avons également illustré l'importance de la vectorisation dans des tâches de fouille de textes en repartant des conclusions obtenues lors du défi intial, et notamment la manière dont la taille du vocabulaire et des n-grammes permet d'améliorer nos résultats. Combiner une nouvelle séparation randomisée des données d'ensemble et de test avec une stratégie d'équilibrage pourrait augmenter ces performances. Jouer avec les données, en tentant notamment d'autres paritions et en diversifiant les distributions des classes permetterait également peut-être d'augmenter, parfois de manière significative, nos résultats. La partition utilisée, ainsi que la méthode de suppression des doublons, même si menant à un corpus sensiblement similaire à celui présenté pour lé défi, peut être un facteur majeur dans l'obtention de performances non satisfaisantes.
+Nous avons pu montrer qu'en équilibrant les données, par exemple avec la technique du sur-échantillonage, nous arrivions à améliorer les performances de nos modèles. Nous avons également illustré l'importance de la vectorisation dans des tâches de fouille de textes en repartant des conclusions obtenues lors du défi intial, et notamment la manière dont la taille du vocabulaire et des n-grammes permet d'améliorer nos résultats. Combiner une nouvelle séparation randomisée des données d'ensemble et de test avec une stratégie d'équilibrage pourrait augmenter ces performances. Jouer avec les données, en tentant notamment d'autres répartitions et en diversifiant les distributions des classes permettrait également peut-être d'augmenter, parfois de manière significative, nos résultats. La répartition utilisée, ainsi que la méthode de suppression des doublons, même si menant à un corpus sensiblement similaire à celui présenté pour lé défi, peut être un facteur majeur dans l'obtention de performances non satisfaisantes.
 
 
 \bibliography{custom}
