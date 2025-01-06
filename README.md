@@ -9,3 +9,5 @@ langues différentes (anglais, français et italien).
 
 L'objectif était de proposer un ou plusieurs classifieurs pour cette tâche, étudier
 leur(s) performances et les comparer aux informations données dans les actes.
+
+[PROJET TERMINÉ]
