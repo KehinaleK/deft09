@@ -8,4 +8,4 @@ types de données sont disponibles et téléchargeables (ref, train et test) en 
 langues différentes (anglais, français et italien).
 
 L'objectif était de proposer un ou plusieurs classifieurs pour cette tâche, étudier
-leur(s) permformances et les comparer aux informations données dans les actes.
+leur(s) performances et les comparer aux informations données dans les actes.
